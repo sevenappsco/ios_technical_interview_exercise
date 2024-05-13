@@ -67,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				6E3A36242BF2601100ECE78C /* UI Modules */,
-				6E3A36282BF2604800ECE78C /* Views */,
 				6E3A361D2BF25F3B00ECE78C /* Models */,
 				6E3A36222BF25FFC00ECE78C /* Helpers */,
 				6E3A361E2BF25FC900ECE78C /* Resources */,
@@ -145,13 +144,6 @@
 				6E3A360C2BF2563500ECE78C /* LaunchScreen.storyboard */,
 			);
 			path = Launch;
-			sourceTree = "<group>";
-		};
-		6E3A36282BF2604800ECE78C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
