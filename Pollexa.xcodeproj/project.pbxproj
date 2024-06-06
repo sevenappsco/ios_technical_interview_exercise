@@ -18,7 +18,7 @@
 		6E3A361A2BF25DAC00ECE78C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3A36192BF25DAC00ECE78C /* User.swift */; };
 		6E3A361C2BF25F2900ECE78C /* PostOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3A361B2BF25F2900ECE78C /* PostOption.swift */; };
 		6E3A36212BF25FD900ECE78C /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E3A361F2BF25FD900ECE78C /* posts.json */; };
-		B71F73752C1219E6002A596C /* PollexaFoundation in Resources */ = {isa = PBXBuildFile; fileRef = B71F73732C1219E6002A596C /* PollexaFoundation */; };
+		B71F73792C121BB2002A596C /* ColorPalette in Frameworks */ = {isa = PBXBuildFile; productRef = B71F73782C121BB2002A596C /* ColorPalette */; };
 		B7EAB1F12C120EF60088DAA3 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */; };
 		B7EAB1F42C12130F0088DAA3 /* GhostableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */; };
 		B7EAB1F72C1213420088DAA3 /* GhostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */; };
@@ -40,7 +40,7 @@
 		6E3A36192BF25DAC00ECE78C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6E3A361B2BF25F2900ECE78C /* PostOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOption.swift; sourceTree = "<group>"; };
 		6E3A36202BF25FD900ECE78C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/posts.json; sourceTree = "<group>"; };
-		B71F73732C1219E6002A596C /* PollexaFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PollexaFoundation; sourceTree = "<group>"; };
+		B71F73772C121B92002A596C /* ColorPalette */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ColorPalette; sourceTree = "<group>"; };
 		B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostableViewController.swift; sourceTree = "<group>"; };
 		B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostTableViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71F73792C121BB2002A596C /* ColorPalette in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +167,7 @@
 		B71F73742C1219E6002A596C /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				B71F73732C1219E6002A596C /* PollexaFoundation */,
+				B71F73772C121B92002A596C /* ColorPalette */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -221,6 +222,7 @@
 			);
 			name = Pollexa;
 			packageProductDependencies = (
+				B71F73782C121BB2002A596C /* ColorPalette */,
 			);
 			productName = Pollexa;
 			productReference = 6E3A35FE2BF2563400ECE78C /* Pollexa.app */;
@@ -267,7 +269,6 @@
 				6E3A360B2BF2563500ECE78C /* Assets.xcassets in Resources */,
 				6E3A360E2BF2563500ECE78C /* Base in Resources */,
 				6E3A36212BF25FD900ECE78C /* posts.json in Resources */,
-				B71F73752C1219E6002A596C /* PollexaFoundation in Resources */,
 				6E3A36092BF2563400ECE78C /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,6 +520,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B71F73782C121BB2002A596C /* ColorPalette */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ColorPalette;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E3A35F62BF2563400ECE78C /* Project object */;
 }
