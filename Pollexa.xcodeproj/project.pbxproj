@@ -25,6 +25,9 @@
 		B71F73812C121DB9002A596C /* GhostTableViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F73802C121DB9002A596C /* GhostTableViewHandler.swift */; };
 		B71F73832C121DF4002A596C /* GhostableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F73822C121DF4002A596C /* GhostableView.swift */; };
 		B71F73852C121E1B002A596C /* GhostAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F73842C121E1B002A596C /* GhostAnimation.swift */; };
+		B71F738B2C1222EF002A596C /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F73892C1222EF002A596C /* PostTableViewCell.swift */; };
+		B71F738C2C1222EF002A596C /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71F738A2C1222EF002A596C /* PostTableViewCell.xib */; };
+		B71F738E2C122C8B002A596C /* Array+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71F738D2C122C8B002A596C /* Array+Helpers.swift */; };
 		B7EAB1F12C120EF60088DAA3 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */; };
 		B7EAB1F42C12130F0088DAA3 /* GhostableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */; };
 		B7EAB1F72C1213420088DAA3 /* GhostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */; };
@@ -53,6 +56,9 @@
 		B71F73802C121DB9002A596C /* GhostTableViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostTableViewHandler.swift; sourceTree = "<group>"; };
 		B71F73822C121DF4002A596C /* GhostableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostableView.swift; sourceTree = "<group>"; };
 		B71F73842C121E1B002A596C /* GhostAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostAnimation.swift; sourceTree = "<group>"; };
+		B71F73892C1222EF002A596C /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		B71F738A2C1222EF002A596C /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
+		B71F738D2C122C8B002A596C /* Array+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Helpers.swift"; sourceTree = "<group>"; };
 		B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostableViewController.swift; sourceTree = "<group>"; };
 		B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostTableViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 		6E3A361E2BF25FC900ECE78C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6E3A36072BF2563400ECE78C /* Main.storyboard */,
 				6E3A360A2BF2563500ECE78C /* Assets.xcassets */,
 				6E3A361F2BF25FD900ECE78C /* posts.json */,
 				6E3A360F2BF2563500ECE78C /* Info.plist */,
@@ -153,19 +160,10 @@
 		6E3A36252BF2602100ECE78C /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				6E3A36262BF2602900ECE78C /* Controllers */,
-				6E3A36072BF2563400ECE78C /* Main.storyboard */,
-				B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */,
+				B71F73872C1222BE002A596C /* ViewModel */,
+				B71F73862C1222B2002A596C /* View */,
 			);
 			path = Discover;
-			sourceTree = "<group>";
-		};
-		6E3A36262BF2602900ECE78C /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				6E3A36052BF2563400ECE78C /* DiscoverViewController.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		6E3A36272BF2603300ECE78C /* Launch */ = {
@@ -182,6 +180,32 @@
 				B71F73772C121B92002A596C /* ColorPalette */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		B71F73862C1222B2002A596C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B71F73882C1222D9002A596C /* Cells */,
+				6E3A36052BF2563400ECE78C /* DiscoverViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B71F73872C1222BE002A596C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B71F73882C1222D9002A596C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B71F73892C1222EF002A596C /* PostTableViewCell.swift */,
+				B71F738A2C1222EF002A596C /* PostTableViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B7EAB1F22C1213070088DAA3 /* ResusableViews */ = {
@@ -219,6 +243,7 @@
 			children = (
 				B7EAB1FF2C1215FC0088DAA3 /* UIView+Helpers.swift */,
 				B71F737A2C121C50002A596C /* UITableView+Helpers.swift */,
+				B71F738D2C122C8B002A596C /* Array+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E3A360B2BF2563500ECE78C /* Assets.xcassets in Resources */,
+				B71F738C2C1222EF002A596C /* PostTableViewCell.xib in Resources */,
 				6E3A360E2BF2563500ECE78C /* Base in Resources */,
 				6E3A36212BF25FD900ECE78C /* posts.json in Resources */,
 				6E3A36092BF2563400ECE78C /* Base in Resources */,
@@ -303,6 +329,7 @@
 				6E3A36062BF2563400ECE78C /* DiscoverViewController.swift in Sources */,
 				6E3A36022BF2563400ECE78C /* AppDelegate.swift in Sources */,
 				B71F737F2C121D5E002A596C /* GhostLayer.swift in Sources */,
+				B71F738B2C1222EF002A596C /* PostTableViewCell.swift in Sources */,
 				6E3A361A2BF25DAC00ECE78C /* User.swift in Sources */,
 				6E3A36162BF25D8D00ECE78C /* PostProvider.swift in Sources */,
 				B7EAB1F72C1213420088DAA3 /* GhostTableViewController.swift in Sources */,
@@ -312,6 +339,7 @@
 				B71F737D2C121D25002A596C /* GhostStyle.swift in Sources */,
 				B7EAB1F42C12130F0088DAA3 /* GhostableViewController.swift in Sources */,
 				B71F73812C121DB9002A596C /* GhostTableViewHandler.swift in Sources */,
+				B71F738E2C122C8B002A596C /* Array+Helpers.swift in Sources */,
 				B7EAB2002C1215FC0088DAA3 /* UIView+Helpers.swift in Sources */,
 				B71F737B2C121C50002A596C /* UITableView+Helpers.swift in Sources */,
 				6E3A36182BF25DA800ECE78C /* Post.swift in Sources */,
