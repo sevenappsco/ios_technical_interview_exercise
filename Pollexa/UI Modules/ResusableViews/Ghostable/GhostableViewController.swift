@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import PollexaFoundation
+import ColorPalette
 
 /// Make your `UIViewController` instance implement this protocol if you want to display/hide a ghost animation on top of it
 protocol GhostableViewController: UIViewController {
