@@ -57,7 +57,8 @@ final class PostViewModel: ObservableObject {
         postsViewModels = posts.map { post in
             CellViewModel(
                 title: post.content,
-                username: post.user?.username ?? "-"
+                username: post.user?.username ?? "-",
+                avatar: post.user?.image ?? nil
             )
         }
         

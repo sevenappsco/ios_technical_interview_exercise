@@ -15,11 +15,16 @@ protocol PostResultCell {
 }
 
 
-class PostTableViewCell: UITableViewCell, PostResultCell {
+final class PostTableViewCell: UITableViewCell, PostResultCell {
     
     typealias PostModel = ViewModel
+
+    @IBOutlet private weak var postTitleLabel: UILabel!
     
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var avatarView: UIImageView!
+    
+    @IBOutlet private weak var username: UILabel!
+    @IBOutlet private weak var totalVotesLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,8 +42,12 @@ class PostTableViewCell: UITableViewCell, PostResultCell {
     }
     
     func configureCell(viewModel: ViewModel) {
-        titleLabel.text = viewModel.title
-             
+      
+        username.text = viewModel.username
+        postTitleLabel.text = viewModel.title
+        if let avatar = viewModel.avatar {
+            avatarView.image = avatar
+        }
     }
     
     override func updateConfiguration(using state: UICellConfigurationState) {
@@ -59,7 +68,7 @@ private extension PostTableViewCell {
     ///
     func configureLabels() {
 //        subtitleLabel.applyCaption1Style()
-//        titleLabel.applyBodyStyle()
+        postTitleLabel.applyTitleStyle()
 //        statusLabel.applyFootnoteStyle()
 //        statusLabel.numberOfLines = 0
 //        statusLabel.textColor = .black // constant because there will always background color on the label
@@ -79,6 +88,7 @@ extension PostTableViewCell {
         var id: String = UUID().uuidString
         let title: String
         let username: String
+        let avatar: UIImage?
        
     }
 }

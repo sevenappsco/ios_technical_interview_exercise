@@ -11,7 +11,6 @@ import Combine
 class DiscoverViewController: UIViewController, GhostableViewController {
 
     // MARK: - Properties
-    private let postProvider = PostProvider.shared
     private let viewModel: PostViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -31,7 +30,7 @@ class DiscoverViewController: UIViewController, GhostableViewController {
     ///
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(refreshCouponList), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshList), for: .valueChanged)
         return refreshControl
     }()
     
@@ -45,7 +44,7 @@ class DiscoverViewController: UIViewController, GhostableViewController {
     }
     
     required init?(coder: NSCoder) {
-        self.viewModel = PostViewModel() // Or provide a default value, if possible
+        self.viewModel = PostViewModel()
         super.init(coder: coder)
     }
     
@@ -54,15 +53,24 @@ class DiscoverViewController: UIViewController, GhostableViewController {
         super.viewDidLoad()
         configureTableView()
         configureViewModel()
+        
+        Utility.logAllAvailableFonts()
+    }
+    
+    /// Triggers a refresh for the coupon list
+    ///
+    @objc func refreshList() {
+        // 
+        refreshControl.endRefreshing()
     }
 }
-
 
 // MARK: - View Configuration
 //
 private extension DiscoverViewController {
     func configureTableView() {
         registerTableViewCells()
+
         tableView.dataSource = dataSource
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -90,7 +98,6 @@ private extension DiscoverViewController {
 }
 
 private extension DiscoverViewController {
-    
     final func configureViewModel() {
         viewModel.$state
             .removeDuplicates()
@@ -107,7 +114,7 @@ private extension DiscoverViewController {
                     case .refreshing:
                         self.refreshControl.beginRefreshing()
                     case .loadingNextPage:
-                        print("load nex page")
+                        print("load next page")
                     case .initialized:
                         break
                 }
@@ -121,7 +128,6 @@ private extension DiscoverViewController {
                 self.applySnapshot(posts: posts)
             }
             .store(in: &subscriptions)
-
     }
     
     private func applySnapshot(posts: [PostViewModel.CellViewModel]) {
@@ -133,18 +139,14 @@ private extension DiscoverViewController {
 }
 
 // MARK: - TableView Delegate
-//
 extension DiscoverViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 // MARK: - Placeholder cells
-//
 extension DiscoverViewController {
     /// Renders the Placeholder Coupons
-    ///
     func displayPlaceholderCoupons() {
         displayGhostContent()
     }
@@ -155,7 +157,6 @@ extension DiscoverViewController {
         removeGhostContent()
     }
 }
-
 
 // MARK: - Actions
 private extension DiscoverViewController {
@@ -185,7 +186,6 @@ private extension DiscoverViewController {
     ///
     func removeNoResultsOverlay() {}
 }
-
 
 // MARK: - Nested Types
 //
