@@ -19,6 +19,11 @@
 		6E3A361C2BF25F2900ECE78C /* PostOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3A361B2BF25F2900ECE78C /* PostOption.swift */; };
 		6E3A36212BF25FD900ECE78C /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E3A361F2BF25FD900ECE78C /* posts.json */; };
 		B7EAB1F12C120EF60088DAA3 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */; };
+		B7EAB1F42C12130F0088DAA3 /* GhostableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */; };
+		B7EAB1F72C1213420088DAA3 /* GhostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */; };
+		B7EAB1F92C1213A20088DAA3 /* GhostOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1F82C1213A20088DAA3 /* GhostOptions.swift */; };
+		B7EAB1FD2C1215560088DAA3 /* PollexaFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B7EAB1FC2C1215560088DAA3 /* PollexaFoundation */; };
+		B7EAB2002C1215FC0088DAA3 /* UIView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EAB1FF2C1215FC0088DAA3 /* UIView+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		6E3A361B2BF25F2900ECE78C /* PostOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOption.swift; sourceTree = "<group>"; };
 		6E3A36202BF25FD900ECE78C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/posts.json; sourceTree = "<group>"; };
 		B7EAB1F02C120EF60088DAA3 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostableViewController.swift; sourceTree = "<group>"; };
+		B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostTableViewController.swift; sourceTree = "<group>"; };
+		B7EAB1F82C1213A20088DAA3 /* GhostOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostOptions.swift; sourceTree = "<group>"; };
+		B7EAB1FA2C12142F0088DAA3 /* PollexaFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = PollexaFoundation; path = Packages/PollexaFoundation; sourceTree = "<group>"; };
+		B7EAB1FF2C1215FC0088DAA3 /* UIView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7EAB1FD2C1215560088DAA3 /* PollexaFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +63,10 @@
 		6E3A35F52BF2563400ECE78C = {
 			isa = PBXGroup;
 			children = (
+				B7EAB1FA2C12142F0088DAA3 /* PollexaFoundation */,
 				6E3A36002BF2563400ECE78C /* Pollexa */,
 				6E3A35FF2BF2563400ECE78C /* Products */,
+				B7EAB1FB2C1215560088DAA3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +81,7 @@
 		6E3A36002BF2563400ECE78C /* Pollexa */ = {
 			isa = PBXGroup;
 			children = (
+				B7EAB1FE2C1215EC0088DAA3 /* Extensions */,
 				6E3A36242BF2601100ECE78C /* UI Modules */,
 				6E3A361D2BF25F3B00ECE78C /* Models */,
 				6E3A36222BF25FFC00ECE78C /* Helpers */,
@@ -117,6 +131,7 @@
 		6E3A36242BF2601100ECE78C /* UI Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B7EAB1F22C1213070088DAA3 /* ResusableViews */,
 				6E3A36252BF2602100ECE78C /* Discover */,
 				6E3A36272BF2603300ECE78C /* Launch */,
 			);
@@ -149,6 +164,39 @@
 			path = Launch;
 			sourceTree = "<group>";
 		};
+		B7EAB1F22C1213070088DAA3 /* ResusableViews */ = {
+			isa = PBXGroup;
+			children = (
+				B7EAB1F52C1213310088DAA3 /* Ghostable */,
+			);
+			path = ResusableViews;
+			sourceTree = "<group>";
+		};
+		B7EAB1F52C1213310088DAA3 /* Ghostable */ = {
+			isa = PBXGroup;
+			children = (
+				B7EAB1F32C12130F0088DAA3 /* GhostableViewController.swift */,
+				B7EAB1F62C1213420088DAA3 /* GhostTableViewController.swift */,
+				B7EAB1F82C1213A20088DAA3 /* GhostOptions.swift */,
+			);
+			path = Ghostable;
+			sourceTree = "<group>";
+		};
+		B7EAB1FB2C1215560088DAA3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7EAB1FE2C1215EC0088DAA3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B7EAB1FF2C1215FC0088DAA3 /* UIView+Helpers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -165,6 +213,9 @@
 			dependencies = (
 			);
 			name = Pollexa;
+			packageProductDependencies = (
+				B7EAB1FC2C1215560088DAA3 /* PollexaFoundation */,
+			);
 			productName = Pollexa;
 			productReference = 6E3A35FE2BF2563400ECE78C /* Pollexa.app */;
 			productType = "com.apple.product-type.application";
@@ -222,12 +273,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7EAB1F12C120EF60088DAA3 /* PostViewModel.swift in Sources */,
+				B7EAB1F92C1213A20088DAA3 /* GhostOptions.swift in Sources */,
 				6E3A36062BF2563400ECE78C /* DiscoverViewController.swift in Sources */,
 				6E3A36022BF2563400ECE78C /* AppDelegate.swift in Sources */,
 				6E3A361A2BF25DAC00ECE78C /* User.swift in Sources */,
 				6E3A36162BF25D8D00ECE78C /* PostProvider.swift in Sources */,
+				B7EAB1F72C1213420088DAA3 /* GhostTableViewController.swift in Sources */,
 				6E3A361C2BF25F2900ECE78C /* PostOption.swift in Sources */,
 				6E3A36042BF2563400ECE78C /* SceneDelegate.swift in Sources */,
+				B7EAB1F42C12130F0088DAA3 /* GhostableViewController.swift in Sources */,
+				B7EAB2002C1215FC0088DAA3 /* UIView+Helpers.swift in Sources */,
 				6E3A36182BF25DA800ECE78C /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +512,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7EAB1FC2C1215560088DAA3 /* PollexaFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PollexaFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E3A35F62BF2563400ECE78C /* Project object */;
 }
