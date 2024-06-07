@@ -55,6 +55,14 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
     private func configureVoteView() {
         let stackView = UIStackView(arrangedSubviews: [voteView1, voteView2])
         
+        voteView1.layer.masksToBounds = true
+        voteView1.layer.cornerRadius = 16
+        voteView1.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        
+        voteView2.layer.masksToBounds = true
+        voteView2.layer.cornerRadius = 16
+        voteView2.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+
         stackView.axis = .horizontal
         stackView.spacing = 4
         stackView.alignment = .fill

@@ -51,6 +51,7 @@ class DiscoverViewController: UIViewController, GhostableViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         configureTableView()
         configureViewModel()
     }
@@ -66,7 +67,36 @@ class DiscoverViewController: UIViewController, GhostableViewController {
 // MARK: - View Configuration
 //
 private extension DiscoverViewController {
+    
+    func setupNavigationBar() {
+        
+        // Set up the view controller to prefer large titles
+        navigationItem.title = viewModel.pageTitle
+        navigationItem.largeTitleDisplayMode = .always
+
+        let avatarImageView = UIImageView(image: UIImage(named: "avatar_6"))
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        avatarImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        avatarImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        avatarImageView.layer.cornerRadius = 20
+        avatarImageView.clipsToBounds = true
+        
+        // Create the left bar button item with the avatar image view
+        let leftBarButtonItem = UIBarButtonItem(customView: avatarImageView)
+        
+        // Create the right bar button item with a plus icon
+        let plusIcon = UIImage(systemName: "plus") // Use a system icon or your own icon
+        let rightBarButtonItem = UIBarButtonItem(image: plusIcon, style: .plain, target: self, action: #selector(plusButtonTapped))
+        
+        // Set the left and right bar button items to the navigation bar
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc func plusButtonTapped() {}
+    
     func configureTableView() {
+      
         registerTableViewCells()
         
         tableView.dataSource = dataSource

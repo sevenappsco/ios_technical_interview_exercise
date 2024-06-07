@@ -373,6 +373,10 @@ public extension UIColor {
     static var discoverBackground: UIColor {
         UIColor(red: 248/255, green: 248/255, blue: 255/255, alpha: 1)
     }
+    
+    static var appColor: UIColor {
+        UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 1)
+    }
 }
 
 // MARK: - UI elements.

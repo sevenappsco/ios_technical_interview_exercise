@@ -39,7 +39,8 @@ final class PostViewModel: ObservableObject {
             await fetchPosts()
         }
     }
-    
+    @Published private(set) var pageTitle: String = Localization.pageTitle
+
     @MainActor
     func fetchPosts() async {
         do {
@@ -47,10 +48,9 @@ final class PostViewModel: ObservableObject {
             posts = try await loadPages()
             
             currentUser = posts.first?.user ?? nil
-            
         
             /// simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.buildCouponViewModels()
             }
 
@@ -62,20 +62,7 @@ final class PostViewModel: ObservableObject {
     
     func buildCouponViewModels() {
         postsViewModels = posts.map { post in
-            
-//            CellViewModel(id: post.id,
-//                          title: post.content,
-//                          username: post.user?.username ?? "-",
-//                          avatar: post.user?.image ?? nil,
-//                          date: post.createdAt,
-//                          lastVotedDate: post.lastVoteAt ?? nil,
-//                          totalVoteCount:  post.options.reduce(0) { $0 + $1.voted },
-//                          options: post.options,
-//                          isVoted: post.votedBys.contains(where: { votedBy in
-//                                votedBy.postId == post.id && post.options.contains(where: { $0 == votedBy.selectedOption })
-//                            }),
-//                          currentUser: currentUser,
-//                          votedUsers: post.votedBys)
+
             CellViewModel(id: post.id,
                           title: post.content,
                           username: post.user?.username ?? "-",
@@ -85,8 +72,9 @@ final class PostViewModel: ObservableObject {
                           totalVoteCount:  post.options.reduce(0) { $0 + $1.voted },
                           options: post.options,
                           isVoted: post.votedBys.contains(where: { votedBy in
-                votedBy.postId == post.id && post.options.contains(where: { $0.id == votedBy.selectedOption.id })
-            }),
+                              votedBy.postId == post.id && post.options.contains(
+                                where: { $0.id == votedBy.selectedOption.id })
+                            }),
                           currentUser: currentUser,
                           votedUsers: post.votedBys)
         }
@@ -99,11 +87,7 @@ final class PostViewModel: ObservableObject {
     }
     
     func vote(at option: Post.Option, indexPath: IndexPath) {
-//        guard let postIndex = posts.firstIndex(where: { post in
-//            post.options.contains(where: { $0.id == option.id })
-//        }) else {
-//            return
-//        }
+
         let postIndex = indexPath.row
         let post = posts[postIndex]
         guard let optionIndex = post.options.firstIndex(where: { $0.id == option.id }) else {
@@ -124,11 +108,6 @@ final class PostViewModel: ObservableObject {
         
         // Replace the old post with the updated one
         posts[postIndex] = updatedPost
-        
-        // Append the current user to the votedBys array
-//        if let currentUser = currentUser {
-//            posts[postIndex].votedBys.append(currentUser)
-//        }
         
         buildCouponViewModels()
     }
@@ -181,7 +160,7 @@ extension PostViewModel {
     }
     
     private enum Localization {
-        static let homePage = NSLocalizedString(
+        static let pageTitle = NSLocalizedString(
             "Discover",
             value: "Discover",
             comment: "Page title of Discover page"

@@ -125,13 +125,17 @@ class VoteView: UIView {
     
     private func updateVoteViewAppearance() {
         if isVotedByCurrentUser {
-            layer.borderWidth = 2.0
-            layer.borderColor = UIColor.systemBlue.cgColor
-            backgroundColor = UIColor.systemBlue.withAlphaComponent(0.1)
+            layer.borderWidth = 4.0
+            layer.borderColor = UIColor.appColor.cgColor
         } else {
             layer.borderWidth = 0.0
             layer.borderColor = UIColor.clear.cgColor
-            backgroundColor = UIColor.clear
         }
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowOpacity = 0.5
+        layer.shadowRadius = 1.0
+        layer.masksToBounds = false
     }
 }
