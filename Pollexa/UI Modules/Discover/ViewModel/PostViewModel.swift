@@ -24,13 +24,13 @@ final class PostViewModel: ObservableObject {
 
     @Published private(set) var postsViewModels: [CellViewModel] = []
 
-    @Published private(set) var currentUser: User? {
+    @Published private(set) var currentUser: User?
+    
+    private(set) var posts: [Post] = [] {
         didSet {
-            print("Current mock User \(currentUser)")
+            print(posts)
         }
     }
-
-    private(set) var posts: [Post] = []
     
     @Published private(set) var state: PostListState = .loading
     
@@ -45,7 +45,10 @@ final class PostViewModel: ObservableObject {
         do {
 
             posts = try await loadPages()
+            
             currentUser = posts.first?.user ?? nil
+            
+        
             /// simulate loading
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.buildCouponViewModels()
@@ -59,19 +62,33 @@ final class PostViewModel: ObservableObject {
     
     func buildCouponViewModels() {
         postsViewModels = posts.map { post in
-           
-            CellViewModel(
-                title: post.content,
-                username: post.user?.username ?? "-",
-                avatar: post.user?.image ?? nil,
-                date: post.createdAt,
-                lastVotedDate: post.lastVoteAt ?? nil,
-                totalVoteCount: post.options.reduce(0) { $0 + $1.voted },
-                options: post.options,
-                isVoted: (post.votedBys.contains(where: {$0.id == self.currentUser?.id})),
-                currentUser: self.currentUser,
-                votedUsers: post.votedBys
-            )
+            
+//            CellViewModel(id: post.id,
+//                          title: post.content,
+//                          username: post.user?.username ?? "-",
+//                          avatar: post.user?.image ?? nil,
+//                          date: post.createdAt,
+//                          lastVotedDate: post.lastVoteAt ?? nil,
+//                          totalVoteCount:  post.options.reduce(0) { $0 + $1.voted },
+//                          options: post.options,
+//                          isVoted: post.votedBys.contains(where: { votedBy in
+//                                votedBy.postId == post.id && post.options.contains(where: { $0 == votedBy.selectedOption })
+//                            }),
+//                          currentUser: currentUser,
+//                          votedUsers: post.votedBys)
+            CellViewModel(id: post.id,
+                          title: post.content,
+                          username: post.user?.username ?? "-",
+                          avatar: post.user?.image ?? nil,
+                          date: post.createdAt,
+                          lastVotedDate: post.lastVoteAt ?? nil,
+                          totalVoteCount:  post.options.reduce(0) { $0 + $1.voted },
+                          options: post.options,
+                          isVoted: post.votedBys.contains(where: { votedBy in
+                votedBy.postId == post.id && post.options.contains(where: { $0.id == votedBy.selectedOption.id })
+            }),
+                          currentUser: currentUser,
+                          votedUsers: post.votedBys)
         }
         
         if !postsViewModels.isEmpty {
@@ -98,9 +115,12 @@ final class PostViewModel: ObservableObject {
         
         // Append the current user to the votedBys array
         var updatedPost = posts[postIndex]
-        if let currentUser {
-            updatedPost.votedBys.append(currentUser)
-        }
+        let votedBy = VotedBy(
+            user: currentUser!,
+            postId: posts[postIndex].id,
+            selectedOption: option
+        )
+        updatedPost.votedBys.append(votedBy)
         
         // Replace the old post with the updated one
         posts[postIndex] = updatedPost

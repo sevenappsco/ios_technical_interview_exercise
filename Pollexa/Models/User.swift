@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct User: Decodable, Equatable, Hashable {
+struct User: Decodable, Equatable, Hashable, Identifiable {
     
     // MARK: - Types
     enum CodingKeys: String, CodingKey {
@@ -38,5 +38,5 @@ struct User: Decodable, Equatable, Hashable {
                 debugDescription: "An image with name \(imageName) could not be loaded from the bundle.")
             )
         }
-    }
+    }    
 }

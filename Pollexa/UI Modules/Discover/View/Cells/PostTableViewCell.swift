@@ -93,19 +93,20 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
    
         let firstOption = viewModel.options[0]
         let secondOption = viewModel.options[1]
-        
     
         voteView1.configure(
             with: firstOption,
             isVoted: viewModel.isVoted,
-            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: firstOption), isVotedByCurrentUser: viewModel.isCurrentUserVoted(),
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: firstOption),
+            isVotedByCurrentUser: viewModel.votedUsers.contains(where: {$0.postId == viewModel.id && $0.selectedOption.id == firstOption.id}),
             indexPath: indexPath
             
         )
         voteView2.configure(
             with: secondOption,
             isVoted: viewModel.isVoted,
-            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: secondOption), isVotedByCurrentUser: viewModel.isCurrentUserVoted(),
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: secondOption),
+            isVotedByCurrentUser: viewModel.votedUsers.contains(where: {$0.postId == viewModel.id && $0.selectedOption.id == secondOption.id}),
             indexPath: indexPath
         )
     }
@@ -143,10 +144,11 @@ private extension PostTableViewCell {
 //
 extension PostTableViewCell {
     struct ViewModel: Hashable {
+        
         /// A unique ID to avoid duplicated identifier for the view model in diffable datasource.
         /// Please make sure to override this variable with a value corresponding to the content of the cell if you use diffable datasource,
         /// to avoid unnecessary animation when reloading the table view.
-        var id: String = UUID().uuidString
+        var id: String
         let title: String
         let username: String
         let avatar: UIImage?
@@ -156,7 +158,7 @@ extension PostTableViewCell {
         var options: [Post.Option]
         let isVoted: Bool 
         let currentUser: User?
-        let votedUsers:[User]
+        let votedUsers:[VotedBy]
         
     }
 }
@@ -166,12 +168,11 @@ extension PostTableViewCell.ViewModel {
         return  Double(option.voted)  / Double(totalVoteCount) * 100
     }
     
-    func isCurrentUserVoted() -> Bool {
-        if let currentUser {
-            return votedUsers.contains(where: {$0.id == currentUser.id})
-        }
-        return false
-    }
+//    func isCurrentUserVoted() -> Bool {
+//        return votedUsers.contains(where: { votedBy in
+//            votedBy.postId == id && options.contains(where: { $0.id == votedBy.selectedOption.id })
+//        })
+//    }
 }
 
 fileprivate extension UIImageView {

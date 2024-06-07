@@ -22,7 +22,11 @@ class VoteView: UIView {
     
     var option: Post.Option?
     
-    var isVotedByCurrentUser: Bool = false
+    var isVotedByCurrentUser: Bool = false {
+        didSet {
+            updateVoteViewAppearance()
+        }
+    }
     
     var isVoted: Bool = false {
         didSet {
