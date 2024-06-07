@@ -95,6 +95,9 @@ class VoteView: UIView {
         
         // Setup imageView
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            imageView.contentMode = .scaleAspectFill
+        }
         containerView.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: containerView.topAnchor),
