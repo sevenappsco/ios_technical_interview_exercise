@@ -21,6 +21,7 @@
          "image_name":"avatar_1",
       },
       "lastVoteAt":"2024-06-07T15:12:15Z",
+      "votedBys": []
    },
    {
       "id":"post_2",
@@ -43,7 +44,9 @@
          "username":"Chris",
          "image_name":"avatar_3"
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
+      
    },
    {
       "id":"post_3",
@@ -66,7 +69,8 @@
          "username":"Diana",
          "image_name":"avatar_4",
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
 
    },
    {
@@ -90,7 +94,8 @@
          "username":"Evan",
          "image_name":"avatar_5"
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
    },
    {
       "id":"post_5",
@@ -113,7 +118,8 @@
          "username":"Chris",
          "image_name":"avatar_3"
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
 
    },
    {
@@ -137,7 +143,8 @@
          "username":"Alice",
          "image_name":"avatar_1"
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
 
    },
    {
@@ -161,6 +168,7 @@
          "username":"Beth",
          "image_name":"avatar_2"
       },
-      "lastVoteAt":"2024-04-28T15:12:15Z"
+      "lastVoteAt":"2024-04-28T15:12:15Z",
+      "votedBys": []
    }
 ]

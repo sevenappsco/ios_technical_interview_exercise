@@ -8,7 +8,7 @@
 import UIKit
 
 protocol VoteViewDelegate: AnyObject {
-    func didUserVote(at option: Post.Option)
+    func didUserVote(at option: Post.Option, indexPath: IndexPath)
 }
 
 class VoteView: UIView {
@@ -22,12 +22,16 @@ class VoteView: UIView {
     
     var option: Post.Option?
     
+    var isVotedByCurrentUser: Bool = false
     
     var isVoted: Bool = false {
         didSet {
-            updateRatioLabel()
+//            updateRatioLabel()
+            updateVoteViewAppearance()
         }
     }
+    
+    var indexPath : IndexPath = IndexPath()
     
     var voteRatio: Double = 0.0 {
         didSet {
@@ -94,7 +98,7 @@ class VoteView: UIView {
     
     @objc private func voteButtonTapped() {
         guard let option = option else { return }
-        delegate?.didUserVote(at: option)
+        delegate?.didUserVote(at: option, indexPath: self.indexPath)
     }
     
     private func updateRatioLabel() {
@@ -104,10 +108,26 @@ class VoteView: UIView {
         voteButton.isHidden = isVoted
     }
     
-    func configure(with option: Post.Option, isVoted: Bool, voteRatio: Double) {
+    
+    final func configure(with option: Post.Option, isVoted: Bool, voteRatio: Double, isVotedByCurrentUser: Bool, indexPath: IndexPath) {
         self.imageView.image = option.image
         self.option = option
         self.isVoted = isVoted
         self.voteRatio = voteRatio
+        self.isVotedByCurrentUser = isVotedByCurrentUser
+        self.indexPath = indexPath
+        
+    }
+    
+    private func updateVoteViewAppearance() {
+        if isVotedByCurrentUser {
+            layer.borderWidth = 2.0
+            layer.borderColor = UIColor.systemBlue.cgColor
+            backgroundColor = UIColor.systemBlue.withAlphaComponent(0.1)
+        } else {
+            layer.borderWidth = 0.0
+            layer.borderColor = UIColor.clear.cgColor
+            backgroundColor = UIColor.clear
+        }
     }
 }

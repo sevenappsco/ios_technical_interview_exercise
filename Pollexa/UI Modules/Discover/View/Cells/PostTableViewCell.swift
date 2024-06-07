@@ -11,12 +11,12 @@ protocol PostResultCell {
     associatedtype PostModel
     
     static func register(for tableView: UITableView)
-    func configureCell(searchModel: PostModel)
+    func configureCell(searchModel: PostModel, indexpath: IndexPath)
 }
 
-protocol PostTableViewCellDelegate: AnyObject {
-    func didUserVoteAt(option: Post.Option)
-}
+//protocol PostTableViewCellDelegate: AnyObject {
+//    func didUserVoteAt(option: Post.Option)
+//}
 
 final class PostTableViewCell: UITableViewCell, PostResultCell {
     
@@ -33,7 +33,7 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
     let voteView1 = VoteView()
     let voteView2 = VoteView()
     
-    weak var delegate:PostTableViewCellDelegate?
+//    weak var delegate:PostTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,8 +48,8 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
     }
 
     
-    func configureCell(searchModel: ViewModel) {
-        configureCell(viewModel: searchModel)
+    func configureCell(searchModel: ViewModel, indexpath: IndexPath) {
+        configureCell(viewModel: searchModel, indexPath: indexpath )
     }
     
     private func configureVoteView() {
@@ -72,7 +72,7 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
         
     }
     
-    func configureCell(viewModel: ViewModel) {
+    func configureCell(viewModel: ViewModel, indexPath: IndexPath) {
       
         username.text = viewModel.username
         postTitleLabel.text = viewModel.title
@@ -85,10 +85,10 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
         }
         totalVotesLabel.text = "\(viewModel.totalVoteCount) Total Votes"
         
-        configureVoteViewWith(viewModel)
+        configureVoteViewWith(viewModel, indexPath: indexPath)
     }
     
-    private func configureVoteViewWith(_ viewModel: ViewModel) {
+    private func configureVoteViewWith(_ viewModel: ViewModel, indexPath: IndexPath) {
         
    
         let firstOption = viewModel.options[0]
@@ -98,12 +98,15 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
         voteView1.configure(
             with: firstOption,
             isVoted: viewModel.isVoted,
-            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: firstOption)
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: firstOption), isVotedByCurrentUser: viewModel.isCurrentUserVoted(),
+            indexPath: indexPath
+            
         )
         voteView2.configure(
             with: secondOption,
             isVoted: viewModel.isVoted,
-            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: secondOption)
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: secondOption), isVotedByCurrentUser: viewModel.isCurrentUserVoted(),
+            indexPath: indexPath
         )
     }
 }
@@ -152,7 +155,8 @@ extension PostTableViewCell {
         let totalVoteCount:Int
         var options: [Post.Option]
         let isVoted: Bool 
-       
+        let currentUser: User?
+        let votedUsers:[User]
         
     }
 }
@@ -160,6 +164,13 @@ extension PostTableViewCell {
 extension PostTableViewCell.ViewModel {
     func getRatio(for option: Post.Option) -> Double {
         return  Double(option.voted)  / Double(totalVoteCount) * 100
+    }
+    
+    func isCurrentUserVoted() -> Bool {
+        if let currentUser {
+            return votedUsers.contains(where: {$0.id == currentUser.id})
+        }
+        return false
     }
 }
 

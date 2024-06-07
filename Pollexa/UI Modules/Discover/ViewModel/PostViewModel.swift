@@ -24,7 +24,12 @@ final class PostViewModel: ObservableObject {
 
     @Published private(set) var postsViewModels: [CellViewModel] = []
 
-    
+    @Published private(set) var currentUser: User? {
+        didSet {
+            print("Current mock User \(currentUser)")
+        }
+    }
+
     private(set) var posts: [Post] = []
     
     @Published private(set) var state: PostListState = .loading
@@ -40,8 +45,9 @@ final class PostViewModel: ObservableObject {
         do {
 
             posts = try await loadPages()
+            currentUser = posts.first?.user ?? nil
             /// simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.buildCouponViewModels()
             }
 
@@ -53,6 +59,7 @@ final class PostViewModel: ObservableObject {
     
     func buildCouponViewModels() {
         postsViewModels = posts.map { post in
+           
             CellViewModel(
                 title: post.content,
                 username: post.user?.username ?? "-",
@@ -61,7 +68,9 @@ final class PostViewModel: ObservableObject {
                 lastVotedDate: post.lastVoteAt ?? nil,
                 totalVoteCount: post.options.reduce(0) { $0 + $1.voted },
                 options: post.options,
-                isVoted: post.options.reduce(0) { $0 + $1.voted } > 0 ? true : false
+                isVoted: (post.votedBys.contains(where: {$0.id == self.currentUser?.id})),
+                currentUser: self.currentUser,
+                votedUsers: post.votedBys
             )
         }
         
@@ -72,11 +81,34 @@ final class PostViewModel: ObservableObject {
         }
     }
     
-    func vote(at option: Post.Option) {
-        guard let postIndex = posts.firstIndex(where: { $0.options.contains(where: { $0.id == option.id }) }) else { return }
-        guard let optionIndex = posts[postIndex].options.firstIndex(where: { $0.id == option.id }) else { return }
+    func vote(at option: Post.Option, indexPath: IndexPath) {
+//        guard let postIndex = posts.firstIndex(where: { post in
+//            post.options.contains(where: { $0.id == option.id })
+//        }) else {
+//            return
+//        }
+        let postIndex = indexPath.row
+        let post = posts[postIndex]
+        guard let optionIndex = post.options.firstIndex(where: { $0.id == option.id }) else {
+            return
+        }
         
+        // Update the voted count
         posts[postIndex].options[optionIndex].voted += 1
+        
+        // Append the current user to the votedBys array
+        var updatedPost = posts[postIndex]
+        if let currentUser {
+            updatedPost.votedBys.append(currentUser)
+        }
+        
+        // Replace the old post with the updated one
+        posts[postIndex] = updatedPost
+        
+        // Append the current user to the votedBys array
+//        if let currentUser = currentUser {
+//            posts[postIndex].votedBys.append(currentUser)
+//        }
         
         buildCouponViewModels()
     }

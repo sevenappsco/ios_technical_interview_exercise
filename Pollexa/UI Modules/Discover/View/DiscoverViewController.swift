@@ -90,7 +90,7 @@ private extension DiscoverViewController {
             cellProvider: {  tableView, indexPath, cellViewModel in
                 let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
                 if let cell = cell as? PostTableViewCell {
-                    cell.configureCell(viewModel: cellViewModel)
+                    cell.configureCell(viewModel: cellViewModel, indexPath: indexPath)
                     cell.voteView1.delegate = self
                     cell.voteView2.delegate = self
                 }
@@ -99,16 +99,16 @@ private extension DiscoverViewController {
         )
     }
     
-    func handleVote(for voteView: VoteView?) {
-        guard let voteView = voteView, let option = voteView.option else { return }
-        // Delegate the vote action to the view model
-        viewModel.vote(at: option)
-    }
+//    func handleVote(for voteView: VoteView?) {
+//        guard let voteView = voteView, let option = voteView.option else { return }
+//        // Delegate the vote action to the view model
+//        viewModel.vote(at: option)
+//    }
 }
     
 extension DiscoverViewController: VoteViewDelegate {
-    func didUserVote(at option: Post.Option) {
-        viewModel.vote(at: option)
+    func didUserVote(at option: Post.Option, indexPath: IndexPath ) {
+        viewModel.vote(at: option, indexPath: indexPath)
     }
 }
 

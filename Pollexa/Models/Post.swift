@@ -16,4 +16,5 @@ struct Post: Decodable {
     var options: [Option]
     let user: User?
     let lastVoteAt: Date?
+    var votedBys: [User]
 }

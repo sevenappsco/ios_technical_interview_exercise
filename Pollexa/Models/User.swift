@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct User: Decodable {
+struct User: Decodable, Equatable, Hashable {
     
     // MARK: - Types
     enum CodingKeys: String, CodingKey {
