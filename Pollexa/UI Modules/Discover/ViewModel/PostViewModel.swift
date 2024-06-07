@@ -52,11 +52,7 @@ final class PostViewModel: ObservableObject {
         do {
             posts = try await loadPages()
             currentUser = posts.first?.user ?? nil
-            
-            // Simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                self.buildCouponViewModels()
-            }
+            buildCouponViewModels()
         } catch {
             print("⛔️ Error loading pages: \(error)")
             state = .empty
@@ -82,8 +78,11 @@ final class PostViewModel: ObservableObject {
                 votedUsers: post.votedBys
             )
         }
-        
-        state = postsViewModels.isEmpty ? .empty : .posts
+        /// Simulate Data
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.state = self.postsViewModels.isEmpty ? .empty : .posts
+        }
+       
     }
     
     /// Votes for a specific option in a post and updates the view models.
