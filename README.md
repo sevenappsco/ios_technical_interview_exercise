@@ -1,4 +1,9 @@
 # ios Technical Interview Exercise
+
+<img src="docs/images/1.png" width="240">
+<img src="docs/images/2.png" width="240">
+<img src="docs/images/3.png" width="240">
+
 In this project, you are tasked with creating the main screen of an iOS app using Swift programming language and UIKit. The app is a social polling platform where users can create and share polls on various topics. Your task involves displaying mock data representing user-generated polls. This app is an opportunity to demonstrate your ability to craft a user-friendly interface, manage data efficiently, and implement the MVVM architectural pattern to produce a clean, maintainable, and well-structured codebase. 
 
 Your work will include not only the development of the app but also the creation of comprehensive unit and UI tests to ensure reliability and robustness. Through this project, you will showcase your understanding of Apple's design guidelines and your ability to create an intuitive and accessible user experience.
