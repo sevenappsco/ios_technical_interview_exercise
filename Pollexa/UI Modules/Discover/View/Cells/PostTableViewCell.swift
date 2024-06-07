@@ -14,6 +14,9 @@ protocol PostResultCell {
     func configureCell(searchModel: PostModel)
 }
 
+protocol PostTableViewCellDelegate: AnyObject {
+    func didUserVoteAt(option: Post.Option)
+}
 
 final class PostTableViewCell: UITableViewCell, PostResultCell {
     
@@ -21,20 +24,23 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var postTitleLabel: UILabel!
-    
     @IBOutlet private weak var avatarView: UIImageView!
     @IBOutlet private weak var dateLabel: UILabel!
-    
     @IBOutlet private weak var username: UILabel!
     @IBOutlet private weak var totalVotesLabel: UILabel!
-    
     @IBOutlet private weak var lastVotedTimeLabel: UILabel!
+    @IBOutlet private weak var voteContainerView: UIView!
+    let voteView1 = VoteView()
+    let voteView2 = VoteView()
+    
+    weak var delegate:PostTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
         configureBackground()
         configureLabels()
+        configureVoteView()
     }
     
     static func register(for tableView: UITableView) {
@@ -44,6 +50,26 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
     
     func configureCell(searchModel: ViewModel) {
         configureCell(viewModel: searchModel)
+    }
+    
+    private func configureVoteView() {
+        let stackView = UIStackView(arrangedSubviews: [voteView1, voteView2])
+        
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.masksToBounds = true
+        stackView.layer.cornerRadius = 16
+        voteContainerView.addSubview(stackView)
+        
+        stackView.leadingAnchor.constraint(equalTo: voteContainerView.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: voteContainerView.trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: voteContainerView.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: voteContainerView.bottomAnchor).isActive = true
+        
     }
     
     func configureCell(viewModel: ViewModel) {
@@ -58,13 +84,28 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
             lastVotedTimeLabel.text = "Last Voted \(lastVotedDate.relativelyFormattedUpdateString)".uppercased()
         }
         totalVotesLabel.text = "\(viewModel.totalVoteCount) Total Votes"
+        
+        configureVoteViewWith(viewModel)
     }
     
-//    override func updateConfiguration(using state: UICellConfigurationState) {
-//        super.updateConfiguration(using: state)
-////        updateDefaultBackgroundConfiguration(using: state)
-//    }
+    private func configureVoteViewWith(_ viewModel: ViewModel) {
+        
+   
+        let firstOption = viewModel.options[0]
+        let secondOption = viewModel.options[1]
+        
     
+        voteView1.configure(
+            with: firstOption,
+            isVoted: viewModel.isVoted,
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: firstOption)
+        )
+        voteView2.configure(
+            with: secondOption,
+            isVoted: viewModel.isVoted,
+            voteRatio: viewModel.totalVoteCount == 0 ? 0 : viewModel.getRatio(for: secondOption)
+        )
+    }
 }
 
 // MARK: - Setup
@@ -76,23 +117,20 @@ private extension PostTableViewCell {
         containerView.layer.masksToBounds = true
         containerView.layer.cornerRadius = 16
         
+        voteContainerView.layer.masksToBounds = true
+        voteContainerView.layer.cornerRadius = 16
+        
         //rgba(147, 162, 180, 1)
     }
     
     /// Setup: Labels
     ///
     func configureLabels() {
-//        subtitleLabel.applyCaption1Style()
         postTitleLabel.applyTitleStyle()
-//        statusLabel.applyFootnoteStyle()
-//        statusLabel.numberOfLines = 0
-//        statusLabel.textColor = .black // constant because there will always background color on the label
-//        statusLabel.layer.cornerRadius = CGFloat(4.0)
-//        statusLabel.layer.masksToBounds = true
-        
         dateLabel.applyFootnoteStyle()
         lastVotedTimeLabel.applyFootnoteStyle()
         totalVotesLabel.applyCalloutStyle()
+        avatarView.roundedImage()
 
     }
 }
@@ -112,6 +150,24 @@ extension PostTableViewCell {
         let date: Date
         let lastVotedDate: Date?
         let totalVoteCount:Int
+        var options: [Post.Option]
+        let isVoted: Bool 
        
+        
+    }
+}
+
+extension PostTableViewCell.ViewModel {
+    func getRatio(for option: Post.Option) -> Double {
+        return  Double(option.voted)  / Double(totalVoteCount) * 100
+    }
+}
+
+fileprivate extension UIImageView {
+    func roundedImage() {
+        self.layer.cornerRadius = (self.frame.size.width) / 2;
+        self.clipsToBounds = true
+        self.layer.borderWidth = 3.0
+        self.layer.borderColor = UIColor.white.cgColor
     }
 }

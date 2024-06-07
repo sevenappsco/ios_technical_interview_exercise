@@ -68,7 +68,7 @@ class DiscoverViewController: UIViewController, GhostableViewController {
 private extension DiscoverViewController {
     func configureTableView() {
         registerTableViewCells()
-
+        
         tableView.dataSource = dataSource
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -76,7 +76,7 @@ private extension DiscoverViewController {
         tableView.delegate = self
         tableView.backgroundColor = .discoverBackground
         tableView.separatorStyle = .none
-      
+        
     }
     
     func registerTableViewCells() {
@@ -91,10 +91,24 @@ private extension DiscoverViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
                 if let cell = cell as? PostTableViewCell {
                     cell.configureCell(viewModel: cellViewModel)
+                    cell.voteView1.delegate = self
+                    cell.voteView2.delegate = self
                 }
                 return cell
             }
         )
+    }
+    
+    func handleVote(for voteView: VoteView?) {
+        guard let voteView = voteView, let option = voteView.option else { return }
+        // Delegate the vote action to the view model
+        viewModel.vote(at: option)
+    }
+}
+    
+extension DiscoverViewController: VoteViewDelegate {
+    func didUserVote(at option: Post.Option) {
+        viewModel.vote(at: option)
     }
 }
 

@@ -118,6 +118,7 @@
                 <outlet property="postTitleLabel" destination="OSt-nH-RN8" id="7bE-JY-Woe"/>
                 <outlet property="totalVotesLabel" destination="89d-Ii-2Xu" id="huv-xX-lFP"/>
                 <outlet property="username" destination="1Zv-sK-ArH" id="g7c-Ny-2rj"/>
+                <outlet property="voteContainerView" destination="9UK-D3-lkA" id="am7-cC-I56"/>
             </connections>
             <point key="canvasLocation" x="45.801526717557252" y="132.04225352112678"/>
         </tableViewCell>

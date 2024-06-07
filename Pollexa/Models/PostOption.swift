@@ -9,7 +9,7 @@ import UIKit
 
 extension Post {
     
-    struct Option: Decodable {
+    struct Option: Decodable, Hashable {
         
         // MARK: - Types
         enum CodingKeys: String, CodingKey {
@@ -21,7 +21,7 @@ extension Post {
         // MARK: - Properties
         let id: String
         let image: UIImage
-        let voted: Int
+        var voted: Int
         
         // MARK: - Life Cycle
         init(from decoder: any Decoder) throws {

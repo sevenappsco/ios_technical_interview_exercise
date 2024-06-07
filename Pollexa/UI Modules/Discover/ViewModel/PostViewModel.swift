@@ -41,7 +41,7 @@ final class PostViewModel: ObservableObject {
 
             posts = try await loadPages()
             /// simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                 self.buildCouponViewModels()
             }
 
@@ -59,7 +59,9 @@ final class PostViewModel: ObservableObject {
                 avatar: post.user?.image ?? nil,
                 date: post.createdAt,
                 lastVotedDate: post.lastVoteAt ?? nil,
-                totalVoteCount: post.options.reduce(0) { $0 + $1.voted }
+                totalVoteCount: post.options.reduce(0) { $0 + $1.voted },
+                options: post.options,
+                isVoted: post.options.reduce(0) { $0 + $1.voted } > 0 ? true : false
             )
         }
         
@@ -68,6 +70,15 @@ final class PostViewModel: ObservableObject {
         } else {
             state = .empty
         }
+    }
+    
+    func vote(at option: Post.Option) {
+        guard let postIndex = posts.firstIndex(where: { $0.options.contains(where: { $0.id == option.id }) }) else { return }
+        guard let optionIndex = posts[postIndex].options.firstIndex(where: { $0.id == option.id }) else { return }
+        
+        posts[postIndex].options[optionIndex].voted += 1
+        
+        buildCouponViewModels()
     }
 }
 

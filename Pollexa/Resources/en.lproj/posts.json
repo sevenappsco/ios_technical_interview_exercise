@@ -7,12 +7,12 @@
          {
             "id":"option_1",
             "image_name":"post_1_option_1",
-            "voted": 10
+            "voted": 0
          },
          {
             "id":"option_2",
             "image_name":"post_1_option_2",
-            "voted": 10
+            "voted": 0
          }
       ],
       "user":{
@@ -30,7 +30,7 @@
          {
             "id":"option_1",
             "image_name":"post_2_option_1",
-            "voted": 10
+            "voted": 20
          },
          {
             "id":"option_2",
@@ -77,12 +77,12 @@
          {
             "id":"option_1",
             "image_name":"post_4_option_1",
-            "voted": 10
+            "voted": 53
          },
          {
             "id":"option_2",
             "image_name":"post_4_option_2",
-            "voted": 10
+            "voted": 47
          }
       ],
       "user":{
@@ -124,7 +124,7 @@
          {
             "id":"option_1",
             "image_name":"post_6_option_1",
-            "voted": 10
+            "voted": 20
          },
          {
             "id":"option_2",
@@ -153,7 +153,7 @@
          {
             "id":"option_2",
             "image_name":"post_7_option_2",
-            "voted": 10
+            "voted": 40
          }
       ],
       "user":{
