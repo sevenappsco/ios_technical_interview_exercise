@@ -15,4 +15,5 @@ struct Post: Decodable {
     let content: String
     let options: [Option]
     let user: User?
+    let lastVoteAt: Date?
 }

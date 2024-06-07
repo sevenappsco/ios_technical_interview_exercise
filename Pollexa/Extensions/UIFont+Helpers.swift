@@ -50,6 +50,8 @@ struct Font {
         case h4 = 14.0
         case h5 = 12.0
         case h6 = 10.0
+        
+        case h7 = 13.0
     }
     
     
@@ -112,7 +114,7 @@ extension UIFont {
     }
     
     static var title1: UIFont {
-        Font(.installed(.SFPRORegular), size: .standard(.h3)).instance
+        Font(.installed(.SFPROMedium), size: .standard(.h3)).instance
     }
     
     static var title2: UIFont {
@@ -144,11 +146,11 @@ extension UIFont {
     }
     
     static var callout: UIFont {
-        return .preferredFont(forTextStyle: .callout)
+        Font(.installed(.SFPRORegular), size: .standard(.h7)).instance
     }
     
     static var footnote: UIFont {
-        return .preferredFont(forTextStyle: .footnote)
+        Font(.installed(.SFPRORegular), size: .standard(.h7)).instance
     }
     
     static var caption1: UIFont {

@@ -40,10 +40,8 @@ final class PostViewModel: ObservableObject {
         do {
 
             posts = try await loadPages()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                //            transitionToResultsUpdatedState(hasData: !posts.isEmpty)
-                
+            /// simulate loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.buildCouponViewModels()
             }
 
@@ -58,7 +56,10 @@ final class PostViewModel: ObservableObject {
             CellViewModel(
                 title: post.content,
                 username: post.user?.username ?? "-",
-                avatar: post.user?.image ?? nil
+                avatar: post.user?.image ?? nil,
+                date: post.createdAt,
+                lastVotedDate: post.lastVoteAt ?? nil,
+                totalVoteCount: post.options.reduce(0) { $0 + $1.voted }
             )
         }
         

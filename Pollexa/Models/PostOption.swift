@@ -15,18 +15,20 @@ extension Post {
         enum CodingKeys: String, CodingKey {
             case id
             case imageName
+            case voted
         }
         
         // MARK: - Properties
         let id: String
         let image: UIImage
+        let voted: Int
         
         // MARK: - Life Cycle
         init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
             id = try container.decode(String.self, forKey: .id)
-            
+            voted = try container.decode(Int.self, forKey: .voted)
             let imageName = try container.decode(
                 String.self,
                 forKey: .imageName

@@ -19,15 +19,20 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
     
     typealias PostModel = ViewModel
 
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var postTitleLabel: UILabel!
     
     @IBOutlet private weak var avatarView: UIImageView!
+    @IBOutlet private weak var dateLabel: UILabel!
     
     @IBOutlet private weak var username: UILabel!
     @IBOutlet private weak var totalVotesLabel: UILabel!
     
+    @IBOutlet private weak var lastVotedTimeLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
         configureBackground()
         configureLabels()
     }
@@ -48,12 +53,17 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
         if let avatar = viewModel.avatar {
             avatarView.image = avatar
         }
+        dateLabel.text = viewModel.date.relativelyFormattedUpdateString
+        if let lastVotedDate = viewModel.lastVotedDate {
+            lastVotedTimeLabel.text = "Last Voted \(lastVotedDate.relativelyFormattedUpdateString)".uppercased()
+        }
+        totalVotesLabel.text = "\(viewModel.totalVoteCount) Total Votes"
     }
     
-    override func updateConfiguration(using state: UICellConfigurationState) {
-        super.updateConfiguration(using: state)
-        updateDefaultBackgroundConfiguration(using: state)
-    }
+//    override func updateConfiguration(using state: UICellConfigurationState) {
+//        super.updateConfiguration(using: state)
+////        updateDefaultBackgroundConfiguration(using: state)
+//    }
     
 }
 
@@ -61,7 +71,12 @@ final class PostTableViewCell: UITableViewCell, PostResultCell {
 //
 private extension PostTableViewCell {
     func configureBackground() {
-        configureDefaultBackgroundConfiguration()
+        self.backgroundColor = .clear
+        containerView.backgroundColor = .white
+        containerView.layer.masksToBounds = true
+        containerView.layer.cornerRadius = 16
+        
+        //rgba(147, 162, 180, 1)
     }
     
     /// Setup: Labels
@@ -74,6 +89,11 @@ private extension PostTableViewCell {
 //        statusLabel.textColor = .black // constant because there will always background color on the label
 //        statusLabel.layer.cornerRadius = CGFloat(4.0)
 //        statusLabel.layer.masksToBounds = true
+        
+        dateLabel.applyFootnoteStyle()
+        lastVotedTimeLabel.applyFootnoteStyle()
+        totalVotesLabel.applyCalloutStyle()
+
     }
 }
 
@@ -89,6 +109,9 @@ extension PostTableViewCell {
         let title: String
         let username: String
         let avatar: UIImage?
+        let date: Date
+        let lastVotedDate: Date?
+        let totalVoteCount:Int
        
     }
 }

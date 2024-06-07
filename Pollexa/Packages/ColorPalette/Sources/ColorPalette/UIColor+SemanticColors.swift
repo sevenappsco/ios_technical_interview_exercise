@@ -369,6 +369,10 @@ public extension UIColor {
         .init(light: .withColorStudio(.pollexaPurple, shade: .shade0),
               dark: .withColorStudio(.pollexaPurple, shade: .shade90))
     }
+    
+    static var discoverBackground: UIColor {
+        UIColor(red: 248/255, green: 248/255, blue: 255/255, alpha: 1)
+    }
 }
 
 // MARK: - UI elements.
@@ -438,6 +442,10 @@ public extension UIColor {
     ///
     static var productsCellSelectedBackgroundColor: UIColor {
         return UIColor.pollexaPurple(.shade0)
+    }
+    
+    static var backgroundColor: UIColor {
+        return UIColor.gray(.shade0)
     }
 }
 

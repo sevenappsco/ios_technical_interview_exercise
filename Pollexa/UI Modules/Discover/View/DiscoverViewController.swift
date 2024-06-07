@@ -53,8 +53,6 @@ class DiscoverViewController: UIViewController, GhostableViewController {
         super.viewDidLoad()
         configureTableView()
         configureViewModel()
-        
-        Utility.logAllAvailableFonts()
     }
     
     /// Triggers a refresh for the coupon list
@@ -76,6 +74,9 @@ private extension DiscoverViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addSubview(refreshControl)
         tableView.delegate = self
+        tableView.backgroundColor = .discoverBackground
+        tableView.separatorStyle = .none
+      
     }
     
     func registerTableViewCells() {

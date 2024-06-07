@@ -1,63 +1,73 @@
 [
    {
       "id":"post_1",
-      "created_at":"2024-04-29T15:12:15Z",
+      "created_at":"2024-06-07T15:12:15Z",
       "content":"Which dessert should I serve at my party?",
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_1_option_1"
+            "image_name":"post_1_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_1_option_2"
+            "image_name":"post_1_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_1",
          "username":"Alice",
-         "image_name":"avatar_1"
-      }
+         "image_name":"avatar_1",
+      },
+      "lastVoteAt":"2024-06-07T15:12:15Z",
    },
    {
       "id":"post_2",
-      "created_at":"2024-04-15T15:12:15Z",
+      "created_at":"2024-06-06T15:12:15Z",
       "content":"Which car should I buy for my next vehicle?",
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_2_option_1"
+            "image_name":"post_2_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_2_option_2"
+            "image_name":"post_2_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_3",
          "username":"Chris",
          "image_name":"avatar_3"
-      }
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
    },
    {
       "id":"post_3",
-      "created_at":"2024-05-07T15:12:15Z",
+      "created_at":"2024-06-05T15:12:15Z",
       "content":"Where should we go for our anniversary trip?",
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_3_option_1"
+            "image_name":"post_3_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_3_option_2"
+            "image_name":"post_3_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_4",
          "username":"Diana",
-         "image_name":"avatar_4"
-      }
+         "image_name":"avatar_4",
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
+
    },
    {
       "id":"post_4",
@@ -66,18 +76,21 @@
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_4_option_1"
+            "image_name":"post_4_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_4_option_2"
+            "image_name":"post_4_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_5",
          "username":"Evan",
          "image_name":"avatar_5"
-      }
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
    },
    {
       "id":"post_5",
@@ -86,18 +99,22 @@
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_5_option_1"
+            "image_name":"post_5_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_5_option_2"
+            "image_name":"post_5_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_3",
          "username":"Chris",
          "image_name":"avatar_3"
-      }
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
+
    },
    {
       "id":"post_6",
@@ -106,18 +123,22 @@
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_6_option_1"
+            "image_name":"post_6_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_6_option_2"
+            "image_name":"post_6_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_1",
          "username":"Alice",
          "image_name":"avatar_1"
-      }
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
+
    },
    {
       "id":"post_7",
@@ -126,17 +147,20 @@
       "options":[
          {
             "id":"option_1",
-            "image_name":"post_7_option_1"
+            "image_name":"post_7_option_1",
+            "voted": 10
          },
          {
             "id":"option_2",
-            "image_name":"post_7_option_2"
+            "image_name":"post_7_option_2",
+            "voted": 10
          }
       ],
       "user":{
          "id":"user_2",
          "username":"Beth",
          "image_name":"avatar_2"
-      }
+      },
+      "lastVoteAt":"2024-04-28T15:12:15Z"
    }
 ]
