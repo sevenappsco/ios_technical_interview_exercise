@@ -15,79 +15,83 @@ enum PostListState {
     case posts
     case refreshing // View should display the refresh control
     case loadingNextPage
-
 }
 
+/// A view model for managing and displaying a list of posts.
 final class PostViewModel: ObservableObject {
     
+    /// The type used for cell view models.
     typealias CellViewModel = PostTableViewCell.ViewModel
-
+    
+    /// An array of cell view models for displaying posts in the UI.
     @Published private(set) var postsViewModels: [CellViewModel] = []
-
+    
+    /// The currently logged-in user.
     @Published private(set) var currentUser: User?
     
-    private(set) var posts: [Post] = [] {
-        didSet {
-            print(posts)
-        }
-    }
-    
+    /// An array of `Post` objects.
+    private(set) var posts: [Post] = [] 
+    /// The current state of the post list.
     @Published private(set) var state: PostListState = .loading
     
-    init()  { 
+    /// The title of the page.
+    @Published private(set) var pageTitle: String = Localization.pageTitle
+    
+    /// Initializes the view model and begins fetching posts.
+    init()  {
         Task {
             await fetchPosts()
         }
     }
-    @Published private(set) var pageTitle: String = Localization.pageTitle
-
+    
+    // MARK: - Methods
+    
+    /// Fetches posts asynchronously and updates the state and current user.
     @MainActor
     func fetchPosts() async {
         do {
-
             posts = try await loadPages()
-            
             currentUser = posts.first?.user ?? nil
-        
-            /// simulate loading
+            
+            // Simulate loading
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.buildCouponViewModels()
             }
-
         } catch {
             print("⛔️ Error loading pages: \(error)")
             state = .empty
         }
     }
     
+    /// Builds view models for the posts and updates the state.
     func buildCouponViewModels() {
         postsViewModels = posts.map { post in
-
-            CellViewModel(id: post.id,
-                          title: post.content,
-                          username: post.user?.username ?? "-",
-                          avatar: post.user?.image ?? nil,
-                          date: post.createdAt,
-                          lastVotedDate: post.lastVoteAt ?? nil,
-                          totalVoteCount:  post.options.reduce(0) { $0 + $1.voted },
-                          options: post.options,
-                          isVoted: post.votedBys.contains(where: { votedBy in
-                              votedBy.postId == post.id && post.options.contains(
-                                where: { $0.id == votedBy.selectedOption.id })
-                            }),
-                          currentUser: currentUser,
-                          votedUsers: post.votedBys)
+            CellViewModel(
+                id: post.id,
+                title: post.content,
+                username: post.user?.username ?? "-",
+                avatar: post.user?.image ?? nil,
+                date: post.createdAt,
+                lastVotedDate: post.lastVoteAt ?? nil,
+                totalVoteCount: post.options.reduce(0) { $0 + $1.voted },
+                options: post.options,
+                isVoted: post.votedBys.contains { votedBy in
+                    votedBy.postId == post.id && post.options.contains { $0.id == votedBy.selectedOption.id }
+                },
+                currentUser: currentUser,
+                votedUsers: post.votedBys
+            )
         }
         
-        if !postsViewModels.isEmpty {
-            state = .posts
-        } else {
-            state = .empty
-        }
+        state = postsViewModels.isEmpty ? .empty : .posts
     }
     
+    /// Votes for a specific option in a post and updates the view models.
+    ///
+    /// - Parameters:
+    ///   - option: The option to vote for.
+    ///   - indexPath: The index path of the post in the table view.
     func vote(at option: Post.Option, indexPath: IndexPath) {
-
         let postIndex = indexPath.row
         let post = posts[postIndex]
         guard let optionIndex = post.options.firstIndex(where: { $0.id == option.id }) else {
@@ -113,7 +117,14 @@ final class PostViewModel: ObservableObject {
     }
 }
 
+// MARK: - Private Methods
+
 private extension PostViewModel {
+    
+    /// Loads pages of posts asynchronously.
+    ///
+    /// - Returns: An array of `Post` objects.
+    /// - Throws: An error if the pages could not be loaded.
     @MainActor
     func loadPages() async throws -> [Post] {
         try await withCheckedThrowingContinuation { continuation in
@@ -129,10 +140,15 @@ private extension PostViewModel {
     }
 }
 
-
 // MARK: - Pagination
-//
+
 private extension PostViewModel {
+    
+    /// Transitions the state to syncing based on the page number and whether there is data.
+    ///
+    /// - Parameters:
+    ///   - pageNumber: The current page number.
+    ///   - hasData: A boolean indicating whether there is data.
     func transitionToSyncingState(pageNumber: Int, hasData: Bool) {
         if pageNumber == 1 {
             state = hasData ? .refreshing : .loading
@@ -141,24 +157,26 @@ private extension PostViewModel {
         }
     }
     
+    /// Transitions the state to updated results based on whether there is data.
+    ///
+    /// - Parameter hasData: A boolean indicating whether there is data.
     func transitionToResultsUpdatedState(hasData: Bool) {
-        if hasData {
-            state = .posts
-        } else {
-            state = .empty
-        }
+        state = hasData ? .posts : .empty
     }
 }
 
+// MARK: - State and Localization
 
 extension PostViewModel {
-   
+    
+    /// The different states the post list can be in.
     enum State: Equatable {
         case pagesLoading
         case pagesLoadingError
         case pagesContent
     }
     
+    /// Localized strings used in the view model.
     private enum Localization {
         static let pageTitle = NSLocalizedString(
             "Discover",

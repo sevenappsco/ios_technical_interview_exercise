@@ -9,46 +9,63 @@ import UIKit
 import Combine
 
 class DiscoverViewController: UIViewController, GhostableViewController {
-
+    
     // MARK: - Properties
+    
+    /// The view model that provides data for the view controller.
     private let viewModel: PostViewModel
+    
+    /// A set of AnyCancellable instances to store Combine subscriptions.
     private var cancellables = Set<AnyCancellable>()
-
+    
+    /// The table view displaying the posts.
     @IBOutlet private weak var tableView: UITableView!
-    /// Set when an empty state view controller is displayed.
-    ///
+    
+    /// An optional view controller displayed when the list is empty.
     private var emptyStateViewController: UIViewController?
     
+    /// A lazy property that creates and configures a GhostTableViewController for displaying placeholder cells.
     lazy var ghostTableViewController = GhostTableViewController(
         options: GhostTableViewOptions(
             cellClass: PostTableViewCell.self,
             rowsPerSection: Constants.placeholderRowsPerSection,
             estimatedRowHeight: Constants.estimatedRowHeight,
-            backgroundColor: .basicBackground))
+            backgroundColor: .basicBackground
+        )
+    )
     
-    /// Pull To Refresh Support.
-    ///
+    /// Pull-to-refresh control for refreshing the post list.
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshList), for: .valueChanged)
         return refreshControl
     }()
     
+    /// A set of AnyCancellable instances to store Combine subscriptions.
     private var subscriptions: Set<AnyCancellable> = []
     
+    /// A diffable data source for managing the table view's data.
     private lazy var dataSource: UITableViewDiffableDataSource<Section, PostViewModel.CellViewModel> = makeDataSource()
-
+    
+    /// Initializes the view controller with a view model.
+    ///
+    /// - Parameter viewModel: The view model that provides data for the view controller.
     init(viewModel: PostViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// Initializes the view controller from a coder.
+    ///
+    /// - Parameter coder: The coder to initialize from.
     required init?(coder: NSCoder) {
         self.viewModel = PostViewModel()
         super.init(coder: coder)
     }
-    
+
     // MARK: - Life Cycle
+    
+    /// Called after the view controller's view has been loaded into memory.
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -56,19 +73,24 @@ class DiscoverViewController: UIViewController, GhostableViewController {
         configureViewModel()
     }
     
-    /// Triggers a refresh for the coupon list
+    /// Triggers a refresh for the post list.
     ///
+    /// This method is called when the user performs a pull-to-refresh action.
     @objc func refreshList() {
-        // 
+        // End refreshing state
         refreshControl.endRefreshing()
     }
+
 }
 
 // MARK: - View Configuration
 //
 private extension DiscoverViewController {
     
-    func setupNavigationBar() {
+    // MARK: - Private Methods
+    
+    /// Sets up the navigation bar.
+    final func setupNavigationBar() {
         
         // Set up the view controller to prefer large titles
         navigationItem.title = viewModel.pageTitle
@@ -95,10 +117,8 @@ private extension DiscoverViewController {
     
     @objc func plusButtonTapped() {}
     
-    func configureTableView() {
-      
+    final func configureTableView() {
         registerTableViewCells()
-        
         tableView.dataSource = dataSource
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -106,13 +126,15 @@ private extension DiscoverViewController {
         tableView.delegate = self
         tableView.backgroundColor = .discoverBackground
         tableView.separatorStyle = .none
-        
     }
     
-    func registerTableViewCells() {
+    final func registerTableViewCells() {
         PostTableViewCell.register(for: tableView)
     }
     
+    // Creates and returns a diffable data source for the table view.
+    ///
+    /// - Returns: A configured diffable data source.
     func makeDataSource() -> UITableViewDiffableDataSource<Section, PostViewModel.CellViewModel> {
         let reuseIdentifier = PostTableViewCell.reuseIdentifier
         return UITableViewDiffableDataSource(
@@ -128,21 +150,19 @@ private extension DiscoverViewController {
             }
         )
     }
-    
-//    func handleVote(for voteView: VoteView?) {
-//        guard let voteView = voteView, let option = voteView.option else { return }
-//        // Delegate the vote action to the view model
-//        viewModel.vote(at: option)
-//    }
 }
-    
+ 
+// MARK: - VoteViewDelegate
+
 extension DiscoverViewController: VoteViewDelegate {
-    func didUserVote(at option: Post.Option, indexPath: IndexPath ) {
+    final func didUserVote(at option: Post.Option, indexPath: IndexPath ) {
         viewModel.vote(at: option, indexPath: indexPath)
     }
 }
 
 private extension DiscoverViewController {
+    /// Configures the view model bindings.
+
     final func configureViewModel() {
         viewModel.$state
             .removeDuplicates()
@@ -169,13 +189,16 @@ private extension DiscoverViewController {
         viewModel.$postsViewModels
             .receive(on: DispatchQueue.main)
             .sink { [weak self] posts in
-                guard let self = self else { return }
+                guard let self  else { return }
                 self.applySnapshot(posts: posts)
             }
             .store(in: &subscriptions)
     }
     
-    private func applySnapshot(posts: [PostViewModel.CellViewModel]) {
+    /// Updates the table view with the given posts.
+    ///
+    /// - Parameter posts: The new posts to display.
+    final func applySnapshot(posts: [PostViewModel.CellViewModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PostViewModel.CellViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(posts, toSection: .main)
@@ -218,18 +241,21 @@ private extension DiscoverViewController {
 
 // MARK: - Empty state view controller
 //
+///
+///Since data is local and we know will not be empty
+///no need to integrate empty screen
 private extension DiscoverViewController {
     /// Displays the overlay when there are no results.
     ///
-    func displayNoResultsOverlay() {}
+    final func displayNoResultsOverlay() {}
     
     /// Shows the EmptyStateViewController as a child view controller.
     ///
-    func displayEmptyStateViewController(_ emptyStateViewController: UIViewController) {}
+    final func displayEmptyStateViewController(_ emptyStateViewController: UIViewController) {}
     
     /// Removes EmptyStateViewController child view controller if applicable.
     ///
-    func removeNoResultsOverlay() {}
+    final func removeNoResultsOverlay() {}
 }
 
 // MARK: - Nested Types

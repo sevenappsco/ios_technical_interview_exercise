@@ -203,8 +203,8 @@
 			isa = PBXGroup;
 			children = (
 				B71F73A72C1260DA002A596C /* Components */,
+				B7D1CA732C137E0700A423A2 /* Scene */,
 				B71F73882C1222D9002A596C /* Cells */,
-				6E3A36052BF2563400ECE78C /* DiscoverViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -250,6 +250,14 @@
 				B71F73AE2C133361002A596C /* VoteView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		B7D1CA732C137E0700A423A2 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				6E3A36052BF2563400ECE78C /* DiscoverViewController.swift */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 		B7EAB1F22C1213070088DAA3 /* ResusableViews */ = {
