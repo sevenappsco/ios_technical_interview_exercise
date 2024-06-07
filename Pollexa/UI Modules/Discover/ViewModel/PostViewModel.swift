@@ -99,7 +99,9 @@ final class PostViewModel: ObservableObject {
         
         // Update the voted count
         posts[postIndex].options[optionIndex].voted += 1
-        
+        // Update the last voted date 
+        posts[postIndex].lastVoteAt = Date()
+
         // Append the current user to the votedBys array
         var updatedPost = posts[postIndex]
         let votedBy = VotedBy(
